@@ -12,7 +12,7 @@ public class AboutView extends Div {
 
     public AboutView() {
         setId("about-view");
-        add(new Text("Gestion de Ascensores"));
+        add(new Text("Gestion de Ascensores!!!!!!!!!!!!!!!!!!!!!!!!!!"));
     }
 
 }
