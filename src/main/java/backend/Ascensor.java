@@ -27,7 +27,6 @@ public class Ascensor {
 	}
 	
 	public void irAPiso(int plantaObjetivo) {
-		System.out.println(this.piso + " " + plantaObjetivo);
 		while (this.piso != plantaObjetivo) {
 			if (plantaObjetivo < this.piso) {
 				this.piso = this.piso - 1;
@@ -36,19 +35,19 @@ public class Ascensor {
 			else {	
 				this.piso = this.piso + 1;
 				System.out.println("planta: " + this.piso);
-				
 			}
 		}	
-		
 		ascensorLlegado();
 	}
 
 	public void abrirPuertas() {
 		this.setEstado(estados.Abriendo);
 	}
+	
 	public void cerrarPuertas() {
 		this.setEstado(estados.Cerrando) ;
 	}
+	
 	public void subiendo() {
 		this.setEstado(estados.Subiendo) ;
 	}
@@ -56,6 +55,13 @@ public class Ascensor {
 	public void bajando() {
 		this.setEstado(estados.Bajando) ;
 	}
+	
+	public void pulsarAlarma() {
+		this.alarma = true;
+		System.out.println("ALARMAAAA");
+	}
+	
+	
 	
 	public void ascensorLlegado() {
 		System.out.println("El ascensor ha llegado");
