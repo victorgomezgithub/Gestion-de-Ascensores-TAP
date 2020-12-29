@@ -14,7 +14,7 @@ public class HelloWorldView extends Div {
 
     public HelloWorldView() {
         setId("hello-world-view");
-        add(new Text("Content placeholder"));
+        add(new Text("PANEL DE CONTROOOOOL!!!!!!!!!"));
     }
 
 }
