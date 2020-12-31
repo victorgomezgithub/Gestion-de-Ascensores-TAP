@@ -30,10 +30,7 @@ import com.example.application.views.main.MainView;
 @JsModule("./styles/shared-styles.js")
 public class MainView extends AppLayout {
 
-	private Navigator navigator = null;
-
-	
-    public MainView() {
+	public MainView() {
         HorizontalLayout header = createHeader();
     	MenuBar barmenu = MenuBarCustom.getMenuBarCustom();
     	addToNavbar(header,barmenu);
