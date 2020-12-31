@@ -17,7 +17,7 @@ import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.server.PWA;
 import com.example.application.components.MenuBarCustom;
-import com.example.application.views.about.AboutView;
+import com.example.application.views.about.Planta1;
 import com.example.application.views.helloworld.HelloWorldView;
 import com.example.application.views.main.MainView;
 

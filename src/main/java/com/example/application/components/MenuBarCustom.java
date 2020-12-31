@@ -1,6 +1,6 @@
 package com.example.application.components;
 
-import com.example.application.views.about.AboutView;
+import com.example.application.views.about.Planta1;
 import com.example.application.views.helloworld.HelloWorldView;
 import com.vaadin.flow.component.contextmenu.MenuItem;
 import com.vaadin.flow.component.menubar.MenuBar;
@@ -22,7 +22,7 @@ public class MenuBarCustom{
     	
     	menuBar.addItem(new Tab((new RouterLink("Panel de Control", HelloWorldView.class))));
         MenuItem plantas = menuBar.addItem(new Tab((new RouterLink("Plantas", HelloWorldView.class))));
-        plantas.getSubMenu().addItem(new Tab(new RouterLink("Planta 1", AboutView.class)));
+        plantas.getSubMenu().addItem(new Tab(new RouterLink("Planta 1", Planta1.class)));
         menuBar.addThemeVariants(MenuBarVariant.LUMO_TERTIARY);
         
         return menuBar;
