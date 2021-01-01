@@ -18,6 +18,11 @@ import com.vaadin.flow.component.orderedlayout.FlexComponent.JustifyContentMode;
 import com.vaadin.flow.component.orderedlayout.FlexLayout.ContentAlignment;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+
+import backend.Edificio;
+
+import javax.swing.event.DocumentEvent.EventType;
+
 import com.example.application.views.main.MainView;
 
 @Route(value = "about", layout = MainView.class)
@@ -25,6 +30,8 @@ import com.example.application.views.main.MainView;
 public class Planta1 extends Div {
 
     public Planta1() {
+    	
+    	Edificio edificio = Edificio.getSingletonEdificio();
     	
         setId("about-view");
         HorizontalLayout tituloHorizontalLayout = new HorizontalLayout();
@@ -38,13 +45,16 @@ public class Planta1 extends Div {
         
         VerticalLayout ascensorVerticalLayout =  new VerticalLayout();
         TextField numeroPisoAscensor1 = new TextField();
-        numeroPisoAscensor1.setValue("0");
+        numeroPisoAscensor1.setValue(String.valueOf(edificio.getAscensorPorIndex(0).getPiso()));
         numeroPisoAscensor1.setReadOnly(true);
         numeroPisoAscensor1.setWidth("30px");
         Image ascensor1 = new Image("images/ascensorCerrado.jpg", "Ascensor Cerrado");
         ascensor1.setWidth("250px");
         ascensor1.setHeight("350px");
         Button callButton1 = new Button("Llamar",new Icon(VaadinIcon.PHONE));
+        callButton1.addClickListener(e -> {
+        	edificio.getPlantaPorIndex(0).llamarAscensor(edificio.getAscensorPorIndex(0));
+        });
         callButton1.addThemeVariants(ButtonVariant.LUMO_SUCCESS);
         ascensorVerticalLayout.add(numeroPisoAscensor1,ascensor1,callButton1);
         ascensorVerticalLayout.getStyle().set("border", "1px solid #9E9E9E");
@@ -68,8 +78,8 @@ public class Planta1 extends Div {
         ascensorVerticalLayout2.add(numeroPisoAscensor2,ascensor2,callButton2);
         ascensorVerticalLayout2.getStyle().set("border", "1px solid #9E9E9E");
         ascensorVerticalLayout2.setHorizontalComponentAlignment(Alignment.CENTER, ascensor2);
-        ascensorVerticalLayout.setHorizontalComponentAlignment(Alignment.CENTER, numeroPisoAscensor2);
-        ascensorVerticalLayout.setHorizontalComponentAlignment(Alignment.CENTER, callButton2);
+        ascensorVerticalLayout2.setHorizontalComponentAlignment(Alignment.CENTER, numeroPisoAscensor2);
+        ascensorVerticalLayout2.setHorizontalComponentAlignment(Alignment.CENTER, callButton2);
 
 
         
@@ -93,8 +103,10 @@ public class Planta1 extends Div {
         ascensorVerticalLayout3.getStyle().set("border", "1px solid #9E9E9E");
         ascensorVerticalLayout3.setHorizontalComponentAlignment(Alignment.CENTER, ascensor3);
         ascensores.add(ascensorVerticalLayout,ascensorVerticalLayout2,ascensorVerticalLayout3);
-        ascensorVerticalLayout.setHorizontalComponentAlignment(Alignment.CENTER, numeroPisoAscensor3);
-        ascensorVerticalLayout.setHorizontalComponentAlignment(Alignment.CENTER, callButton3);
+        ascensorVerticalLayout3.setHorizontalComponentAlignment(Alignment.CENTER, numeroPisoAscensor3);
+        ascensorVerticalLayout3.setHorizontalComponentAlignment(Alignment.CENTER, callButton3);
+        
+        
         
         ascensores.getStyle().set("border", "1px solid #9E9E9E");
 

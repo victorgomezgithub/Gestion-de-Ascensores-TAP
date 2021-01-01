@@ -15,7 +15,7 @@ public class Ascensor {
 	private Boolean alarma;
 	
 	public Ascensor() {
-		this.piso = 0;
+		this.piso = 2;
 		this.setEstado(estados.Parado);
 		this.setAlarma(false);
 	}
