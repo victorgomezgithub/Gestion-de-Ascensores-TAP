@@ -49,5 +49,10 @@ public class Edificio {
 		return plantas.get(index);
 	}
 
+	
+	//TODO metodo que asocie un observer a ascensor, y ya estar
+	public void attachObserver(Observer o,int ascensor) {
+		getAscensorPorIndex(ascensor).attachObserver(o);
+	}
 
 }
