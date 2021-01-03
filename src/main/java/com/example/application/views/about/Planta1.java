@@ -10,6 +10,7 @@ import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.component.orderedlayout.FlexComponent.Alignment;
 import com.vaadin.flow.component.orderedlayout.FlexComponent.JustifyContentMode;
 import com.vaadin.flow.router.PageTitle;
@@ -17,6 +18,8 @@ import com.vaadin.flow.router.Route;
 
 import backend.Edificio;
 import backend.Observer;
+
+import java.util.concurrent.TimeUnit;
 
 import com.example.application.views.main.MainView;
 
@@ -42,6 +45,7 @@ public class Planta1 extends Div implements Observer{
         
         VerticalLayout ascensorVerticalLayout =  new VerticalLayout();
         numeroPisoAscensor1 = new TextField();
+        numeroPisoAscensor1.setValueChangeMode(ValueChangeMode.EAGER);
         numeroPisoAscensor1.setValue(String.valueOf(edificio.getAscensorPorIndex(0).getPiso()));
         numeroPisoAscensor1.setReadOnly(true);
         numeroPisoAscensor1.setWidth("30px");
@@ -115,7 +119,7 @@ public class Planta1 extends Div implements Observer{
 
 	@Override
 	public void update(int piso) {
-        numeroPisoAscensor1.setValue(String.valueOf(piso));		
+        numeroPisoAscensor1.setValue(String.valueOf(piso));
 	}
 
 }
