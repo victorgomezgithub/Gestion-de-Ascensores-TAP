@@ -21,7 +21,7 @@ public class Ascensor {
 	private Boolean alarma;
 	
 	public Ascensor() {
-		this.piso = 2;
+		this.piso = 0;
 		this.setEstado(estados.Parado);
 		this.setAlarma(false);
 		observers =  new ArrayList<Observer>();
@@ -45,7 +45,7 @@ public class Ascensor {
 				System.out.println("planta: " + this.piso);
 			}
 			this.notifyObservers(this.piso);
-		}	
+		}
 		ascensorLlegado();
 	}
 
