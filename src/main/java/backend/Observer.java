@@ -2,6 +2,6 @@ package backend;
 
 public interface Observer {
 	
-	void update(int piso);
+	void update(int piso,int idAscensor);
 
 }

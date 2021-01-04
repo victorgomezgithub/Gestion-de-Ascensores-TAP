@@ -24,18 +24,18 @@ import backend.Observer;
 public abstract class PlantaMainViewGeneral extends Div implements Observer{
 
 
-	TextField numeroPisoAscensor1;
-	TextField numeroPisoAscensor2;
-	TextField numeroPisoAscensor3;
-	Image ascensor1;
-	Image ascensor2;
-    Image ascensor3;
+	TextField[] numeroPisoAscensores = new TextField[3];
+	Image[] ascensoresImagenes = new Image[3];
 
 	private final int planta = getPlantaActual();
     public PlantaMainViewGeneral() {
     	
     	Edificio edificio = Edificio.getSingletonEdificio();
+    	
     	edificio.attachObserver(this, 0);
+    	edificio.attachObserver(this, 1);
+    	edificio.attachObserver(this, 2);
+    	
         setId("about-view");
         HorizontalLayout tituloHorizontalLayout = new HorizontalLayout();
         H1 planta  = getH1Planta();
@@ -43,89 +43,88 @@ public abstract class PlantaMainViewGeneral extends Div implements Observer{
         tituloHorizontalLayout.setJustifyContentMode(JustifyContentMode.CENTER);
         
         
-        
+         
         HorizontalLayout ascensores = new HorizontalLayout();
         
         VerticalLayout ascensorVerticalLayout =  new VerticalLayout();
-        this.numeroPisoAscensor1 = new TextField();
-        this.numeroPisoAscensor1.setValueChangeMode(ValueChangeMode.EAGER);
-        this.numeroPisoAscensor1.setValue(String.valueOf(edificio.getAscensorPorIndex(0).getPiso()));
-        this.numeroPisoAscensor1.setReadOnly(true);
-        this.numeroPisoAscensor1.setWidth("30px");
+        this.numeroPisoAscensores[0] = new TextField();
+        this.numeroPisoAscensores[0].setValueChangeMode(ValueChangeMode.EAGER);
+        this.numeroPisoAscensores[0].setValue(String.valueOf(edificio.getAscensorPorIndex(0).getPiso()));
+        this.numeroPisoAscensores[0].setReadOnly(true);
+        this.numeroPisoAscensores[0].setWidth("30px");
         if (this.planta == edificio.getAscensorPorIndex(0).getPiso()) {
-            this.ascensor1 = new Image("images/ascensorAbierto.jpg", "Ascensor Abierto");
+            this.ascensoresImagenes[0] = new Image("images/ascensorAbierto.jpg", "Ascensor Abierto");
         } else {
-            this.ascensor1 = new Image("images/ascensorCerrado.jpg", "Ascensor Cerrado");
-
+            this.ascensoresImagenes[0] = new Image("images/ascensorCerrado.jpg", "Ascensor Cerrado");
         }
-        ascensor1.onEnabledStateChanged(false);
+        this.ascensoresImagenes[0].onEnabledStateChanged(false);
         
-        this.ascensor1.setWidth("250px");
-        this.ascensor1.setHeight("350px"); 
+        this.ascensoresImagenes[0].setWidth("250px");
+        this.ascensoresImagenes[0].setHeight("350px"); 
         Button callButton1 = new Button("Llamar",new Icon(VaadinIcon.PHONE));
         callButton1.addClickListener(e -> {
         	edificio.getPlantaPorIndex(this.planta).llamarAscensor(edificio.getAscensorPorIndex(0));
         });
         callButton1.addThemeVariants(ButtonVariant.LUMO_SUCCESS);
-        ascensorVerticalLayout.add(numeroPisoAscensor1,ascensor1,callButton1);
-        ascensorVerticalLayout.setHorizontalComponentAlignment(Alignment.CENTER, ascensor1);
-        ascensorVerticalLayout.setHorizontalComponentAlignment(Alignment.CENTER, numeroPisoAscensor1);
+        ascensorVerticalLayout.add(this.numeroPisoAscensores[0],ascensoresImagenes[0],callButton1);
+        ascensorVerticalLayout.setHorizontalComponentAlignment(Alignment.CENTER, ascensoresImagenes[0]);
+        ascensorVerticalLayout.setHorizontalComponentAlignment(Alignment.CENTER, this.numeroPisoAscensores[0]);
         ascensorVerticalLayout.setHorizontalComponentAlignment(Alignment.CENTER, callButton1);
         
         
         VerticalLayout ascensorVerticalLayout2 = new VerticalLayout();
-        numeroPisoAscensor2 = new TextField();
-        this.numeroPisoAscensor2.setValueChangeMode(ValueChangeMode.EAGER);
-        this.numeroPisoAscensor2.setValue(String.valueOf(edificio.getAscensorPorIndex(1).getPiso()));
-        this.numeroPisoAscensor2.setReadOnly(true);
-        this.numeroPisoAscensor2.setWidth("30px");
+        this.numeroPisoAscensores[1] = new TextField();
+        this.numeroPisoAscensores[1].setValueChangeMode(ValueChangeMode.EAGER);
+        this.numeroPisoAscensores[1].setValue(String.valueOf(edificio.getAscensorPorIndex(1).getPiso()));
+        this.numeroPisoAscensores[1].setReadOnly(true);
+        this.numeroPisoAscensores[1].setWidth("30px");
         if (this.planta == edificio.getAscensorPorIndex(1).getPiso()) {
-            this.ascensor2 = new Image("images/ascensorAbierto.jpg", "Ascensor Abierto");
+            this.ascensoresImagenes[1] = new Image("images/ascensorAbierto.jpg", "Ascensor Abierto");
         } else {
-            this.ascensor2 = new Image("images/ascensorCerrado.jpg", "Ascensor Cerrado");
+            this.ascensoresImagenes[1] = new Image("images/ascensorCerrado.jpg", "Ascensor Cerrado");
 
         }       
-        this.ascensor2.setWidth("250px");
-        this.ascensor2.setHeight("350px");
-        this.ascensor2.onEnabledStateChanged(false);
+        this.ascensoresImagenes[1].setWidth("250px");
+        this.ascensoresImagenes[1].setHeight("350px");
+        this.ascensoresImagenes[1].onEnabledStateChanged(false);
 
         Button callButton2 = new Button("Llamar",new Icon(VaadinIcon.PHONE));
         callButton2.addClickListener(e -> {
         	edificio.getPlantaPorIndex(this.planta).llamarAscensor(edificio.getAscensorPorIndex(1));
         });
         callButton2.addThemeVariants(ButtonVariant.LUMO_SUCCESS);
-        ascensorVerticalLayout2.add(numeroPisoAscensor2,ascensor2,callButton2);
-        ascensorVerticalLayout2.setHorizontalComponentAlignment(Alignment.CENTER, ascensor2);
-        ascensorVerticalLayout2.setHorizontalComponentAlignment(Alignment.CENTER, numeroPisoAscensor2);
+        ascensorVerticalLayout2.add(this.numeroPisoAscensores[1],ascensoresImagenes[1],callButton2);
+        ascensorVerticalLayout2.setHorizontalComponentAlignment(Alignment.CENTER, ascensoresImagenes[1]);
+        ascensorVerticalLayout2.setHorizontalComponentAlignment(Alignment.CENTER, this.numeroPisoAscensores[1]);
         ascensorVerticalLayout2.setHorizontalComponentAlignment(Alignment.CENTER, callButton2);
 
 
         
         VerticalLayout ascensorVerticalLayout3 = new VerticalLayout();
-        this.numeroPisoAscensor3 = new TextField();
-        this.numeroPisoAscensor3.setValueChangeMode(ValueChangeMode.EAGER);
-        this.numeroPisoAscensor3.setValue(String.valueOf(edificio.getAscensorPorIndex(2).getPiso()));
-        this.numeroPisoAscensor3.setReadOnly(true);
-        this.numeroPisoAscensor3.setWidth("30px");
+        this.numeroPisoAscensores[2] = new TextField();
+        this.numeroPisoAscensores[2].setValueChangeMode(ValueChangeMode.EAGER);
+        this.numeroPisoAscensores[2].setValue(String.valueOf(edificio.getAscensorPorIndex(2).getPiso()));
+        this.numeroPisoAscensores[2].setReadOnly(true);
+        this.numeroPisoAscensores[2].setWidth("30px");
         Button callButton3 = new Button("Llamar",new Icon(VaadinIcon.PHONE));
         callButton3.addClickListener(e -> {
         	edificio.getPlantaPorIndex(this.planta).llamarAscensor(edificio.getAscensorPorIndex(2));
         });
         if (this.planta == edificio.getAscensorPorIndex(2).getPiso()) {
-            this.ascensor3 = new Image("images/ascensorAbierto.jpg", "Ascensor Abierto");
+            this.ascensoresImagenes[2] = new Image("images/ascensorAbierto.jpg", "Ascensor Abierto");
         } else {
-            this.ascensor3 = new Image("images/ascensorCerrado.jpg", "Ascensor Cerrado");
+            this.ascensoresImagenes[2] = new Image("images/ascensorCerrado.jpg", "Ascensor Cerrado");
 
         }
-        this.ascensor3.setWidth("250px");
-        this.ascensor3.setHeight("350px");
-        this.ascensor3.onEnabledStateChanged(false);
+        this.ascensoresImagenes[2].setWidth("250px");
+        this.ascensoresImagenes[2].setHeight("350px");
+        this.ascensoresImagenes[2].onEnabledStateChanged(false);
 
         callButton3.addThemeVariants(ButtonVariant.LUMO_SUCCESS);
-        ascensorVerticalLayout3.add(numeroPisoAscensor3,ascensor3,callButton3);
-        ascensorVerticalLayout3.setHorizontalComponentAlignment(Alignment.CENTER, ascensor3);
+        ascensorVerticalLayout3.add(this.numeroPisoAscensores[2],ascensoresImagenes[2],callButton3);
+        ascensorVerticalLayout3.setHorizontalComponentAlignment(Alignment.CENTER, ascensoresImagenes[2]);
         ascensores.add(ascensorVerticalLayout,ascensorVerticalLayout2,ascensorVerticalLayout3);
-        ascensorVerticalLayout3.setHorizontalComponentAlignment(Alignment.CENTER, numeroPisoAscensor3);
+        ascensorVerticalLayout3.setHorizontalComponentAlignment(Alignment.CENTER, this.numeroPisoAscensores[2]);
         ascensorVerticalLayout3.setHorizontalComponentAlignment(Alignment.CENTER, callButton3);
         
         
@@ -142,10 +141,11 @@ public abstract class PlantaMainViewGeneral extends Div implements Observer{
 	abstract H1 getH1Planta();
 
 	@Override
-	public void update(int piso) {
-        this.numeroPisoAscensor1.setValue(String.valueOf(piso));
+	public void update(int piso,int idAscensor) {
+		System.out.println(idAscensor);
+        this.numeroPisoAscensores[idAscensor].setValue(String.valueOf(piso));
         if(piso == planta) {
-        	this.ascensor1.setSrc("images/ascensorAbierto.jpg");
+        	this.ascensoresImagenes[idAscensor].setSrc("images/ascensorAbierto.jpg");
         }
 	}
 	

@@ -5,6 +5,8 @@ import java.util.concurrent.TimeUnit;
 
 public class Ascensor {
 	
+	static int idAscensoresTotales = 0;
+	
 	private ArrayList<Observer> observers;
 	
 	private enum estados{
@@ -19,8 +21,10 @@ public class Ascensor {
 	private estados estado;
 	private int piso;
 	private Boolean alarma;
-	
+	private int idAcensor;
 	public Ascensor() {
+		this.idAcensor = idAscensoresTotales;
+		idAscensoresTotales++;
 		this.piso = 0;
 		this.setEstado(estados.Parado);
 		this.setAlarma(false);
@@ -38,17 +42,21 @@ public class Ascensor {
 			if (plantaObjetivo < this.piso) {
 				this.piso = this.piso - 1;
 				
-				System.out.println("planta: " + this.piso);
+				//System.out.println("planta: " + this.piso);
 			}
 			else {	
 				this.piso = this.piso + 1;
-				System.out.println("planta: " + this.piso);
+				//System.out.println("planta: " + this.piso);
 			}
-			this.notifyObservers(this.piso);
+			this.notifyObservers(this.piso,this.idAcensor);
 		}
 		ascensorLlegado();
 	}
 
+	public int getIdAscensor()
+	{
+		return idAcensor;
+	}
 	public void abrirPuertas() {
 		this.setEstado(estados.Abriendo);
 	}
@@ -72,7 +80,7 @@ public class Ascensor {
 	
 		
 	public void ascensorLlegado() {
-		System.out.println("El ascensor ha llegado");
+		//System.out.println("El ascensor ha llegado");
 	}
 
 	public estados getEstado() {
@@ -107,10 +115,10 @@ public class Ascensor {
 		this.observers.remove(o);
 	}
 	
-	public void notifyObservers(int piso) {
+	public void notifyObservers(int piso,int idAscensor) {
 		
 		for(Observer o : this.observers) {
-			o.update(piso);
+			o.update(piso,idAscensor);
 		}
 	}
 
