@@ -83,13 +83,10 @@ public abstract class PlantaMainViewGeneral extends Div implements Observer {
 		return ascensorVerticalLayout3;
 	}
 
-	private void alignItemsInVerticalLayout(int numeroVista, VerticalLayout ascensorVerticalLayout3,
-			Button callButton3) {
-		ascensorVerticalLayout3.setHorizontalComponentAlignment(Alignment.CENTER,
-				this.botonesExtraAscensorAbierto[numeroVista]);
+	private void alignItemsInVerticalLayout(int numeroVista, VerticalLayout ascensorVerticalLayout3,Button callButton3) {
+		ascensorVerticalLayout3.setHorizontalComponentAlignment(Alignment.CENTER,this.botonesExtraAscensorAbierto[numeroVista]);
 		ascensorVerticalLayout3.setHorizontalComponentAlignment(Alignment.CENTER, ascensoresImagenes[numeroVista]);
-		ascensorVerticalLayout3.setHorizontalComponentAlignment(Alignment.CENTER,
-				this.numeroPisoAscensores[numeroVista]);
+		ascensorVerticalLayout3.setHorizontalComponentAlignment(Alignment.CENTER,this.numeroPisoAscensores[numeroVista]);
 		ascensorVerticalLayout3.setHorizontalComponentAlignment(Alignment.CENTER, callButton3);
 	}
 
@@ -129,6 +126,12 @@ public abstract class PlantaMainViewGeneral extends Div implements Observer {
 				panelTercero.add(panelDeBotones.get(i));
 			}
 		}
+		
+		Button alarma = new Button(new Icon(VaadinIcon.BELL), e -> {
+			
+		});
+		alarma.addThemeVariants(ButtonVariant.LUMO_ERROR);
+		panelPrimero.add(alarma);
 		botonera.add(panelPrimero, panelSegundo, panelTercero);
 		botonera.setHorizontalComponentAlignment(Alignment.CENTER, panelPrimero);
 
