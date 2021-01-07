@@ -9,8 +9,12 @@ import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.notification.NotificationVariant;
+import com.vaadin.flow.component.notification.Notification.Position;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.page.Page;
 import com.vaadin.flow.component.orderedlayout.FlexComponent.Alignment;
 import com.vaadin.flow.component.orderedlayout.FlexComponent.JustifyContentMode;
 import com.vaadin.flow.component.textfield.TextField;
@@ -110,6 +114,7 @@ public abstract class PlantaMainViewGeneral extends Div implements Observer {
 		HorizontalLayout panelPrimero = new HorizontalLayout();
 		HorizontalLayout panelSegundo = new HorizontalLayout();
 		HorizontalLayout panelTercero = new HorizontalLayout();
+		HorizontalLayout panelCuarto = new HorizontalLayout();
 		for (int i = 0; i <= 6; i++) {
 			Button boton = new Button(String.valueOf(i + 1));
 			boton.addClickListener(e -> {
@@ -128,13 +133,27 @@ public abstract class PlantaMainViewGeneral extends Div implements Observer {
 		}
 		
 		Button alarma = new Button(new Icon(VaadinIcon.BELL), e -> {
-			
+			Notification alarm = new Notification("¡Alarma en el Ascensor " + (this.edificio.getAscensorPorIndex(ascensor).getIdAscensor() + 1) + "!" , 2000);
+			alarm.addThemeVariants(NotificationVariant.LUMO_ERROR);
+			alarm.setPosition(Position.MIDDLE);
+			alarm.open();
 		});
 		alarma.addThemeVariants(ButtonVariant.LUMO_ERROR);
 		panelPrimero.add(alarma);
-		botonera.add(panelPrimero, panelSegundo, panelTercero);
-		botonera.setHorizontalComponentAlignment(Alignment.CENTER, panelPrimero);
+		
+		Button abrirPuertas = new Button(new Icon(VaadinIcon.RESIZE_V), e -> {
 
+		});
+		Button cerrarPuertas = new Button(new Icon(VaadinIcon.HEADER), e -> {
+
+		});
+		
+		panelCuarto.add(abrirPuertas,cerrarPuertas);
+		
+		botonera.add(panelPrimero, panelSegundo, panelTercero, panelCuarto);
+		botonera.setHorizontalComponentAlignment(Alignment.CENTER, panelPrimero);
+		botonera.setHorizontalComponentAlignment(Alignment.CENTER, panelCuarto);
+		
 		botonesExtraAscensorAbierto.add(botonera);
 	}
 

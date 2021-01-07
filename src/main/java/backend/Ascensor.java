@@ -49,6 +49,7 @@ public class Ascensor {
 				//System.out.println("planta: " + this.piso);
 			}
 			this.notifyObservers(this.piso,this.idAcensor);
+
 		}
 		ascensorLlegado();
 	}
