@@ -21,6 +21,7 @@ public class Ascensor {
 	private estados estado;
 	private int piso;
 	private Boolean alarma;
+	private Boolean puerta;
 	private int idAcensor;
 	public Ascensor() {
 		this.idAcensor = idAscensoresTotales;
@@ -28,6 +29,7 @@ public class Ascensor {
 		this.piso = 0;
 		this.setEstado(estados.Parado);
 		this.setAlarma(false);
+		this.setPuerta(true);
 		observers =  new ArrayList<Observer>();
 	}
 	
@@ -38,6 +40,7 @@ public class Ascensor {
 	}
 	
 	public void irAPiso(int plantaObjetivo) {
+		this.setPuerta(false);
 		while (this.piso != plantaObjetivo) {
 			if (plantaObjetivo < this.piso) {
 				this.piso = this.piso - 1;
@@ -60,10 +63,12 @@ public class Ascensor {
 	}
 	public void abrirPuertas() {
 		this.setEstado(estados.Abriendo);
+		this.setPuerta(true);
 	}
 	
 	public void cerrarPuertas() {
 		this.setEstado(estados.Cerrando) ;
+		this.setPuerta(false);
 	}
 	
 	public void subiendo() {
@@ -81,11 +86,15 @@ public class Ascensor {
 	
 		
 	public void ascensorLlegado() {
+		this.setPuerta(true);
 		//System.out.println("El ascensor ha llegado");
 	}
 
 	public estados getEstado() {
 		return estado;
+	}
+	public String getEstadoPcontrol() {
+		return estado.toString();
 	}
 
 	public void setEstado(estados estado) {
@@ -95,6 +104,9 @@ public class Ascensor {
 	public int getPiso() {
 		return piso;
 	}
+	public int getPisoPcontrol() {
+		return piso+1;
+	}
 
 	public void setPiso(int piso) {
 		this.piso = piso;
@@ -102,6 +114,12 @@ public class Ascensor {
 
 	public Boolean getAlarma() {
 		return alarma;
+	}
+	public String getAlarmaPcontrol() {
+		if (alarma==false)
+			return "No pulsada";
+		else
+			return "Pulsada";
 	}
 
 	public void setAlarma(Boolean alarma) {
@@ -121,6 +139,20 @@ public class Ascensor {
 		for(Observer o : this.observers) {
 			o.update(piso,idAscensor);
 		}
+	}
+
+	public Boolean getPuerta() {
+		return puerta;
+	}
+
+	public void setPuerta(Boolean puerta) {
+		this.puerta = puerta;
+	}
+	public String getPuertaPcontrol() {
+		if (puerta==true)
+			return "Abierta";
+		else
+			return "Cerrada";
 	}
 
 }
