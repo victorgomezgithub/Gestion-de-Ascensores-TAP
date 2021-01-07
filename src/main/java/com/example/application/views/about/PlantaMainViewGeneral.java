@@ -2,6 +2,7 @@ package com.example.application.views.about;
 
 import java.util.ArrayList;
 
+
 import org.jsoup.select.Evaluator.IsEmpty;
 
 import com.example.application.views.main.MainView;
