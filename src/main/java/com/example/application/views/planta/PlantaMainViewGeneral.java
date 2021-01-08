@@ -66,6 +66,7 @@ public abstract class PlantaMainViewGeneral extends Div implements Observer {
 		callButton3.addClickListener(e -> {
 			edificio.getPlantaPorIndex(this.planta).llamarAscensor(edificio.getAscensorPorIndex(numeroVista));
 		});
+		
 		panelDeBotones = new ArrayList<Button>();
 		getPanelDeBotones(this.botonesExtraAscensorAbierto[numeroVista], numeroVista);
 		
