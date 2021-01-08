@@ -1,7 +1,6 @@
 package backend;
 
 import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
 
 public class Ascensor {
 	
@@ -15,60 +14,45 @@ public class Ascensor {
 		Cerrando,
 		Abriendo,
 		Parado
-		
 	}
 	
 	private estados estado;
 	private int piso;
-	private Boolean alarma;
-	private Boolean puerta;
-	private int idAcensor;
+	private boolean alarma;
+	private boolean puerta;
+	private int idAscensor;
+	
 	public Ascensor() {
-		this.idAcensor = idAscensoresTotales;
+		this.idAscensor = idAscensoresTotales;
 		idAscensoresTotales++;
 		this.piso = 0;
 		this.setEstado(estados.Parado);
 		this.setAlarma(false);
-		this.setPuerta(true);
+		this.puerta = true;
 		observers =  new ArrayList<Observer>();
 	}
 	
-	public int mostrarPiso (){
-		System.out.println("planta: " + this.piso);
-		return this.piso;
-		
-	}
-	
 	public void irAPiso(int plantaObjetivo) {
-		this.setPuerta(false);
+		this.puerta = true;
 		while (this.piso != plantaObjetivo) {
 			if (plantaObjetivo < this.piso) {
 				this.piso = this.piso - 1;
-				
-				//System.out.println("planta: " + this.piso);
 			}
 			else {	
 				this.piso = this.piso + 1;
-				//System.out.println("planta: " + this.piso);
 			}
-			this.notifyObservers(this.piso,this.idAcensor);
-
+			this.notifyObservers();
 		}
-		ascensorLlegado();
 	}
 
 	public int getIdAscensor()
 	{
-		return idAcensor;
+		return idAscensor;
 	}
+	
 	public void abrirPuertas() {
 		this.setEstado(estados.Abriendo);
 		this.setPuerta(true);
-	}
-	
-	public void cerrarPuertas() {
-		this.setEstado(estados.Cerrando) ;
-		this.setPuerta(false);
 	}
 	
 	public void subiendo() {
@@ -82,12 +66,6 @@ public class Ascensor {
 	public void pulsarAlarma() {
 		this.alarma = true;
 		System.out.println("ALARMAAAA");
-	}
-	
-		
-	public void ascensorLlegado() {
-		this.setPuerta(true);
-		//System.out.println("El ascensor ha llegado");
 	}
 
 	public estados getEstado() {
@@ -112,7 +90,7 @@ public class Ascensor {
 		this.piso = piso;
 	}
 
-	public Boolean getAlarma() {
+	public boolean getAlarma() {
 		return alarma;
 	}
 	public String getAlarmaPcontrol() {
@@ -122,7 +100,7 @@ public class Ascensor {
 			return "Pulsada";
 	}
 
-	public void setAlarma(Boolean alarma) {
+	public void setAlarma(boolean alarma) {
 		this.alarma = alarma;
 	}
 	
@@ -134,19 +112,21 @@ public class Ascensor {
 		this.observers.remove(o);
 	}
 	
-	public void notifyObservers(int piso,int idAscensor) {
+	public void notifyObservers() {
 		
 		for(Observer o : this.observers) {
-			o.update(piso,idAscensor);
+			o.update(this.piso, this.idAscensor);
 		}
 	}
 
-	public Boolean getPuerta() {
-		return puerta;
+	public boolean getPuerta() {
+		
+		return this.puerta;
 	}
 
-	public void setPuerta(Boolean puerta) {
+	public void setPuerta(boolean puerta) {
 		this.puerta = puerta;
+		this.notifyObservers();
 	}
 	public String getPuertaPcontrol() {
 		if (puerta==true)
@@ -154,5 +134,6 @@ public class Ascensor {
 		else
 			return "Cerrada";
 	}
+	
 
 }

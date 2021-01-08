@@ -1,4 +1,4 @@
-package com.example.application.views.about;
+package com.example.application.views.planta;
 
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;

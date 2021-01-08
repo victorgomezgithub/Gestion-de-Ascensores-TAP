@@ -1,4 +1,4 @@
-package com.example.application.views.about;
+package com.example.application.views.planta;
 
 import com.example.application.views.main.MainView;
 import com.vaadin.flow.component.html.H1;

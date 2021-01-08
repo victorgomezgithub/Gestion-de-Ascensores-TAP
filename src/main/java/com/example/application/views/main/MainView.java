@@ -1,24 +1,15 @@
 package com.example.application.views.main;
 
-import com.vaadin.flow.component.ComponentUtil;
-import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.applayout.AppLayout;
-import com.vaadin.flow.component.charts.model.Navigator;
-import com.vaadin.flow.component.contextmenu.MenuItem;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.dependency.JsModule;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.menubar.MenuBar;
-import com.vaadin.flow.component.menubar.MenuBarVariant;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
-import com.vaadin.flow.component.tabs.Tab;
-import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.server.PWA;
 import com.example.application.components.MenuBarCustom;
-import com.example.application.views.about.Planta1;
-import com.example.application.views.helloworld.HelloWorldView;
 import com.example.application.views.main.MainView;
 
 /**

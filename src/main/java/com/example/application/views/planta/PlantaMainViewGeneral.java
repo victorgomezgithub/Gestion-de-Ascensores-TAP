@@ -1,11 +1,7 @@
-package com.example.application.views.about;
+package com.example.application.views.planta;
 
 import java.util.ArrayList;
 
-
-import org.jsoup.select.Evaluator.IsEmpty;
-
-import com.example.application.views.main.MainView;
 
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
@@ -19,7 +15,6 @@ import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.component.notification.Notification.Position;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.component.page.Page;
 import com.vaadin.flow.component.orderedlayout.FlexComponent.Alignment;
 import com.vaadin.flow.component.orderedlayout.FlexComponent.JustifyContentMode;
 import com.vaadin.flow.component.textfield.TextField;
@@ -72,13 +67,12 @@ public abstract class PlantaMainViewGeneral extends Div implements Observer {
 		callButton3.addClickListener(e -> {
 			edificio.getPlantaPorIndex(this.planta).llamarAscensor(edificio.getAscensorPorIndex(numeroVista));
 		});
-		if (this.planta == edificio.getAscensorPorIndex(numeroVista).getPiso()) {
+		if (checkPuertasAbiertas(numeroVista)) {
 			this.ascensoresImagenes[numeroVista] = new Image("images/ascensorAbierto.jpg", "Ascensor Abierto");
 			panelDeBotones = new ArrayList<Button>();
 			getPanelDeBotones(this.botonesExtraAscensorAbierto[numeroVista], numeroVista);
 		} else {
 			this.ascensoresImagenes[numeroVista] = new Image("images/ascensorCerrado.jpg", "Ascensor Cerrado");
-
 		}
 		this.ascensoresImagenes[numeroVista].setWidth("250px");
 		this.ascensoresImagenes[numeroVista].setHeight("350px");
@@ -123,8 +117,7 @@ public abstract class PlantaMainViewGeneral extends Div implements Observer {
 		for (int i = 0; i <= 6; i++) {
 			Button boton = new Button(String.valueOf(i + 1));
 			boton.addClickListener(e -> {
-				this.edificio.getPlantaPorIndex(Integer.parseInt(boton.getText()) - 1)
-						.llamarAscensor(this.edificio.getAscensorPorIndex(ascensor));
+				this.edificio.getPlantaPorIndex(Integer.parseInt(boton.getText()) - 1).llamarAscensor(this.edificio.getAscensorPorIndex(ascensor));
 			});
 
 			panelDeBotones.add(boton);
@@ -138,7 +131,7 @@ public abstract class PlantaMainViewGeneral extends Div implements Observer {
 		}
 		
 		Button alarma = new Button(new Icon(VaadinIcon.BELL), e -> {
-			Notification alarm = new Notification("¡Alarma en el Ascensor " + (this.edificio.getAscensorPorIndex(ascensor).getIdAscensor() + 1) + "!" , 2000);
+			Notification alarm = new Notification("¡Alarma en el Ascensor " + (this.edificio.getAscensorPorIndex(ascensor).getIdAscensor() + 1) + "!" , 4000);
 			alarm.addThemeVariants(NotificationVariant.LUMO_ERROR);
 			alarm.setPosition(Position.MIDDLE);
 			alarm.open();
@@ -146,11 +139,11 @@ public abstract class PlantaMainViewGeneral extends Div implements Observer {
 		alarma.addThemeVariants(ButtonVariant.LUMO_ERROR);
 		panelPrimero.add(alarma);
 		
-		Button abrirPuertas = new Button(new Icon(VaadinIcon.RESIZE_V), e -> {
-
+		Button abrirPuertas = new Button(new Icon(VaadinIcon.EXPAND_SQUARE), e -> {
+			this.edificio.getAscensorPorIndex(ascensor).setPuerta(true);
 		});
-		Button cerrarPuertas = new Button(new Icon(VaadinIcon.HEADER), e -> {
-
+		Button cerrarPuertas = new Button(new Icon(VaadinIcon.COMPRESS_SQUARE), e -> {
+			this.edificio.getAscensorPorIndex(ascensor).setPuerta(false);
 		});
 		
 		panelCuarto.add(abrirPuertas,cerrarPuertas);
@@ -169,7 +162,7 @@ public abstract class PlantaMainViewGeneral extends Div implements Observer {
 	@Override
 	public void update(int piso, int idAscensor) {
 		this.numeroPisoAscensores[idAscensor].setValue(String.valueOf(piso + 1));
-		if (piso == planta) {
+		if (checkPuertasAbiertas(idAscensor)) {
 			this.ascensoresImagenes[idAscensor].setSrc("images/ascensorAbierto.jpg");
 			this.botonesExtraAscensorAbierto[idAscensor].setVisible(true);
 		} else {
@@ -177,6 +170,16 @@ public abstract class PlantaMainViewGeneral extends Div implements Observer {
 			this.botonesExtraAscensorAbierto[idAscensor].setVisible(false);
 		}
 
+	}
+	
+	
+	public boolean checkPuertasAbiertas(int idAscensor) {		
+		if(this.planta == edificio.getAscensorPorIndex(idAscensor).getPiso() && edificio.getAscensorPorIndex(idAscensor).getPuerta()) {
+			return true;
+		} else {
+			System.out.println("SOPU FALSO");
+			return false;
+		}		
 	}
 
 }
