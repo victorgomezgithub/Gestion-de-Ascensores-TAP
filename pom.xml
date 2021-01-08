@@ -205,7 +205,7 @@
 	
 					<manifest>
 	
-						<mainClass>com.example.application</mainClass>
+						<mainClass>com.example.application.views.main</mainClass>
 	
 					</manifest>
 	
@@ -219,7 +219,7 @@
 			<configuration>
 				<archive>
 					<manifest>
-						<mainClass>com.example.application</mainClass>
+						<mainClass>com.example.application.views.main</mainClass>
 					</manifest>
 				</archive>
 				<descriptorRefs>
