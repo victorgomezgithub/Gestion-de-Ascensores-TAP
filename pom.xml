@@ -205,7 +205,7 @@
 	
 					<manifest>
 	
-						<mainClass>com.miguel.Practica.MyUI</mainClass>
+						<mainClass>com.example.application</mainClass>
 	
 					</manifest>
 	
@@ -219,7 +219,7 @@
 			<configuration>
 				<archive>
 					<manifest>
-						<mainClass>com.miguel.Practica.MyUI</mainClass>
+						<mainClass>com.example.application</mainClass>
 					</manifest>
 				</archive>
 				<descriptorRefs>
