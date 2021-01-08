@@ -43,6 +43,7 @@ public class Ascensor {
 			}
 			this.notifyObservers();
 		}
+		this.notifyObservers();
 	}
 
 	public int getIdAscensor()
@@ -65,7 +66,6 @@ public class Ascensor {
 	
 	public void pulsarAlarma() {
 		this.alarma = true;
-		System.out.println("ALARMAAAA");
 	}
 
 	public estados getEstado() {

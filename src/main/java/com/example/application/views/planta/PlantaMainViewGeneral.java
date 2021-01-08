@@ -59,38 +59,51 @@ public abstract class PlantaMainViewGeneral extends Div implements Observer {
 		botonesExtraAscensorAbierto[numeroVista] = new HorizontalLayout();
 		this.numeroPisoAscensores[numeroVista] = new TextField();
 		this.numeroPisoAscensores[numeroVista].setValueChangeMode(ValueChangeMode.EAGER);
-		this.numeroPisoAscensores[numeroVista]
-				.setValue(String.valueOf(edificio.getAscensorPorIndex(numeroVista).getPiso() + 1));
+		this.numeroPisoAscensores[numeroVista].setValue(String.valueOf(edificio.getAscensorPorIndex(numeroVista).getPiso() + 1));
 		this.numeroPisoAscensores[numeroVista].setReadOnly(true);
 		this.numeroPisoAscensores[numeroVista].setWidth("30px");
 		Button callButton3 = new Button("Llamar", new Icon(VaadinIcon.PHONE));
 		callButton3.addClickListener(e -> {
 			edificio.getPlantaPorIndex(this.planta).llamarAscensor(edificio.getAscensorPorIndex(numeroVista));
 		});
+		panelDeBotones = new ArrayList<Button>();
+		getPanelDeBotones(this.botonesExtraAscensorAbierto[numeroVista], numeroVista);
+		
 		if (checkPuertasAbiertas(numeroVista)) {
 			this.ascensoresImagenes[numeroVista] = new Image("images/ascensorAbierto.jpg", "Ascensor Abierto");
-			panelDeBotones = new ArrayList<Button>();
-			getPanelDeBotones(this.botonesExtraAscensorAbierto[numeroVista], numeroVista);
+			botonesExtraAscensorAbierto[numeroVista].setVisible(true);
 		} else {
 			this.ascensoresImagenes[numeroVista] = new Image("images/ascensorCerrado.jpg", "Ascensor Cerrado");
+			botonesExtraAscensorAbierto[numeroVista].setVisible(false);
 		}
 		this.ascensoresImagenes[numeroVista].setWidth("250px");
 		this.ascensoresImagenes[numeroVista].setHeight("350px");
 		this.ascensoresImagenes[numeroVista].onEnabledStateChanged(false);
 
+		HorizontalLayout panelCuarto = new HorizontalLayout();
+		
+		Button abrirPuertas = new Button(new Icon(VaadinIcon.EXPAND_SQUARE), e -> {
+			this.edificio.getAscensorPorIndex(numeroVista).setPuerta(true);
+		});
+		Button cerrarPuertas = new Button(new Icon(VaadinIcon.COMPRESS_SQUARE), e -> {
+			this.edificio.getAscensorPorIndex(numeroVista).setPuerta(false);
+		});
+		
+		panelCuarto.add(abrirPuertas,cerrarPuertas);
+		
 		callButton3.addThemeVariants(ButtonVariant.LUMO_SUCCESS);
-		ascensorVerticalLayout3.add(this.numeroPisoAscensores[numeroVista], ascensoresImagenes[numeroVista],
-				callButton3);
+		ascensorVerticalLayout3.add(this.numeroPisoAscensores[numeroVista], ascensoresImagenes[numeroVista], callButton3, panelCuarto);
 		ascensorVerticalLayout3.add(this.botonesExtraAscensorAbierto[numeroVista]);
-		alignItemsInVerticalLayout(numeroVista, ascensorVerticalLayout3, callButton3);
+		alignItemsInVerticalLayout(numeroVista, ascensorVerticalLayout3, callButton3, panelCuarto);
 		return ascensorVerticalLayout3;
 	}
 
-	private void alignItemsInVerticalLayout(int numeroVista, VerticalLayout ascensorVerticalLayout3,Button callButton3) {
+	private void alignItemsInVerticalLayout(int numeroVista, VerticalLayout ascensorVerticalLayout3,Button callButton3, HorizontalLayout panelCuarto) {
 		ascensorVerticalLayout3.setHorizontalComponentAlignment(Alignment.CENTER,this.botonesExtraAscensorAbierto[numeroVista]);
 		ascensorVerticalLayout3.setHorizontalComponentAlignment(Alignment.CENTER, ascensoresImagenes[numeroVista]);
 		ascensorVerticalLayout3.setHorizontalComponentAlignment(Alignment.CENTER,this.numeroPisoAscensores[numeroVista]);
 		ascensorVerticalLayout3.setHorizontalComponentAlignment(Alignment.CENTER, callButton3);
+		ascensorVerticalLayout3.setHorizontalComponentAlignment(Alignment.CENTER, panelCuarto);
 	}
 
 	private HorizontalLayout generaTituloPlanta() {
@@ -113,7 +126,6 @@ public abstract class PlantaMainViewGeneral extends Div implements Observer {
 		HorizontalLayout panelPrimero = new HorizontalLayout();
 		HorizontalLayout panelSegundo = new HorizontalLayout();
 		HorizontalLayout panelTercero = new HorizontalLayout();
-		HorizontalLayout panelCuarto = new HorizontalLayout();
 		for (int i = 0; i <= 6; i++) {
 			Button boton = new Button(String.valueOf(i + 1));
 			boton.addClickListener(e -> {
@@ -139,18 +151,9 @@ public abstract class PlantaMainViewGeneral extends Div implements Observer {
 		alarma.addThemeVariants(ButtonVariant.LUMO_ERROR);
 		panelPrimero.add(alarma);
 		
-		Button abrirPuertas = new Button(new Icon(VaadinIcon.EXPAND_SQUARE), e -> {
-			this.edificio.getAscensorPorIndex(ascensor).setPuerta(true);
-		});
-		Button cerrarPuertas = new Button(new Icon(VaadinIcon.COMPRESS_SQUARE), e -> {
-			this.edificio.getAscensorPorIndex(ascensor).setPuerta(false);
-		});
 		
-		panelCuarto.add(abrirPuertas,cerrarPuertas);
-		
-		botonera.add(panelPrimero, panelSegundo, panelTercero, panelCuarto);
+		botonera.add(panelPrimero, panelSegundo, panelTercero);
 		botonera.setHorizontalComponentAlignment(Alignment.CENTER, panelPrimero);
-		botonera.setHorizontalComponentAlignment(Alignment.CENTER, panelCuarto);
 		
 		botonesExtraAscensorAbierto.add(botonera);
 	}
@@ -174,10 +177,9 @@ public abstract class PlantaMainViewGeneral extends Div implements Observer {
 	
 	
 	public boolean checkPuertasAbiertas(int idAscensor) {		
-		if(this.planta == edificio.getAscensorPorIndex(idAscensor).getPiso() && edificio.getAscensorPorIndex(idAscensor).getPuerta()) {
+		if(this.planta == edificio.getAscensorPorIndex(idAscensor).getPiso() && edificio.getAscensorPorIndex(idAscensor).getPuerta() == true) {
 			return true;
 		} else {
-			System.out.println("SOPU FALSO");
 			return false;
 		}		
 	}
