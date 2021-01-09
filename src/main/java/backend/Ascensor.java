@@ -6,6 +6,9 @@ public class Ascensor {
 	
 	static int idAscensoresTotales = 0;
 	
+	public static void restarUnoTotalAscensores() {
+		Ascensor.idAscensoresTotales--;
+	}
 	private ArrayList<Observer> observers;
 	
 	private enum estados{

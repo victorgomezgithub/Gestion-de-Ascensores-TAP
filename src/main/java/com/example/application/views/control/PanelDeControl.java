@@ -1,9 +1,13 @@
 package com.example.application.views.control;
 
+import com.vaadin.flow.component.UI;
+import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.grid.GridVariant;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H1;
+import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.FlexComponent.JustifyContentMode;
 import com.vaadin.flow.router.PageTitle;
@@ -23,16 +27,41 @@ import backend.Edificio;
 public class PanelDeControl extends Div {
 
 	ArrayList<Ascensor> ascensores;
+	Edificio edificio;
 
 	public PanelDeControl() {
-		this.ascensores = Edificio.getSingletonEdificio().getAscensores();		
+		this.edificio= Edificio.getSingletonEdificio();
+		this.ascensores = edificio.getAscensores();		
 		HorizontalLayout tituloPC = createsViewTitle();
 		Grid<Ascensor> grid = createsGridWithData();
 		grid.addThemeVariants(GridVariant.LUMO_NO_BORDER, GridVariant.LUMO_NO_ROW_BORDERS, GridVariant.LUMO_ROW_STRIPES);
-		add(tituloPC, grid);
+		HorizontalLayout botonesControlAscensores = generarControlAscensores();
+		add(tituloPC, grid,botonesControlAscensores);
 	}
 
 	
+	private HorizontalLayout generarControlAscensores() {
+		HorizontalLayout botonesControlAscensores = new HorizontalLayout();
+		Button addAscensor = new Button("Añadir Ascensor",VaadinIcon.PLUS.create(), event -> {
+			edificio.addAscensor();
+			UI.getCurrent().getPage().reload();
+		});
+		addAscensor.addThemeVariants(ButtonVariant.LUMO_SUCCESS);
+		addAscensor.setClassName("boton");
+
+		Button deleteAscensor = new Button("Borrar Ascensor",VaadinIcon.PLUS.create(), event -> {
+			edificio.removeAscensor();
+			UI.getCurrent().getPage().reload();
+		});
+		deleteAscensor.addThemeVariants(ButtonVariant.LUMO_ERROR);
+		
+		botonesControlAscensores.add(addAscensor, deleteAscensor);
+		botonesControlAscensores.setJustifyContentMode(JustifyContentMode.CENTER);
+		
+		return botonesControlAscensores;
+	}
+
+
 	private HorizontalLayout createsViewTitle() {
 		HorizontalLayout tituloPC = new HorizontalLayout();
 		H1 panelcontrol = new H1("Panel de Control");
@@ -50,7 +79,6 @@ public class PanelDeControl extends Div {
 		grid.addColumn(Ascensor::getEstadoPcontrol).setHeader("Estado actual");
 		grid.addColumn(Ascensor::getPuertaPcontrol).setHeader("Estado puerta");
 		grid.addColumn(Ascensor::getAlarmaPcontrol).setHeader("Alarma");
-		
 		return grid;
 	}
 

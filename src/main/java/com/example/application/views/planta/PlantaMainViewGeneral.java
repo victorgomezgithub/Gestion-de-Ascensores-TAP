@@ -33,18 +33,21 @@ public abstract class PlantaMainViewGeneral extends Div implements Observer {
 	// LINEA UTIL PARA COMPRENDER LOS LAYOUT
 	// botonera.getStyle().set("border", "1px solid #9E9E9E");
 
-	private TextField[] numeroPisoAscensores = new TextField[3];
-	private Image[] ascensoresImagenes = new Image[3];
+	private TextField[] numeroPisoAscensores;
+	private Image[] ascensoresImagenes;
 	private ArrayList<Button> panelDeBotones;
 
 	private final int planta = getPlantaActual();
 	private Edificio edificio;
 
-	private HorizontalLayout[] botonesExtraAscensorAbierto = new HorizontalLayout[3];
+	private HorizontalLayout[] botonesExtraAscensorAbierto;
 
 	public PlantaMainViewGeneral() {
 
 		this.edificio = Edificio.getSingletonEdificio();
+		this.numeroPisoAscensores = new TextField[edificio.getAscensoresLength()];
+		this.ascensoresImagenes = new Image[edificio.getAscensoresLength()];
+		botonesExtraAscensorAbierto = new HorizontalLayout[edificio.getAscensoresLength()];
 
 		attachObservers();
 
@@ -52,7 +55,7 @@ public abstract class PlantaMainViewGeneral extends Div implements Observer {
 
 		HorizontalLayout ascensores = new HorizontalLayout();
 
-		for (int i = 0; i < 3; i++) {
+		for (int i = 0; i < edificio.getAscensoresLength(); i++) {
 			VerticalLayout ascensorVerticalLayout = generalVistaAscensor(i);
 			ascensores.add(ascensorVerticalLayout);
 		}
@@ -175,9 +178,9 @@ public abstract class PlantaMainViewGeneral extends Div implements Observer {
 	}
 
 	private void attachObservers() {
-		this.edificio.attachObserver(this, 0);
-		this.edificio.attachObserver(this, 1);
-		this.edificio.attachObserver(this, 2);
+		for(int i = 0; i < edificio.getAscensoresLength(); i++) {
+			this.edificio.attachObserver(this, i);
+		}
 	}
 
 	private void getPanelDeBotones(HorizontalLayout botonesExtraAscensorAbierto, int ascensor) {

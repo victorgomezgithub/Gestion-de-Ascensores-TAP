@@ -41,6 +41,16 @@ public class Edificio {
 		return plantas;	
 	}
 	
+	public void addAscensor() {
+		ascensores.add(new Ascensor());
+	}
+	
+	public void removeAscensor() {
+		ascensores.remove(ascensores.size() - 1);
+		Ascensor.restarUnoTotalAscensores();
+	}
+	
+	
 	public Ascensor getAscensorPorIndex(int index) {
 		return ascensores.get(index);
 	}
@@ -60,6 +70,10 @@ public class Edificio {
 	public void reiniciarSistema() {
 		Ascensor.idAscensoresTotales = 0;
 		edificio = new Edificio();
+	}
+	
+	public int getAscensoresLength() {
+		return ascensores.size();
 	}
 
 }
