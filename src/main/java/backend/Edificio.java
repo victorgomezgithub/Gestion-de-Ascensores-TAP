@@ -56,5 +56,10 @@ public class Edificio {
 	public void attachObserver(Observer o,int ascensor) {
 		getAscensorPorIndex(ascensor).attachObserver(o);
 	}
+	
+	public void reiniciarSistema() {
+		Ascensor.idAscensoresTotales = 0;
+		edificio = new Edificio();
+	}
 
 }

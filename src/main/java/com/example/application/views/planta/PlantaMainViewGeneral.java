@@ -2,12 +2,18 @@ package com.example.application.views.planta;
 
 import java.util.ArrayList;
 
+import javax.swing.text.html.HTML;
 
+import com.vaadin.flow.component.Html;
+import com.vaadin.flow.component.Text;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
+import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Image;
+import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.notification.Notification;
@@ -50,10 +56,58 @@ public abstract class PlantaMainViewGeneral extends Div implements Observer {
 			VerticalLayout ascensorVerticalLayout = generalVistaAscensor(i);
 			ascensores.add(ascensorVerticalLayout);
 		}
+		
+		HorizontalLayout panelDeReinicio = generaBotonDeReinicio();
 
-		add(tituloHorizontalLayout, ascensores);
+		add(tituloHorizontalLayout, ascensores, panelDeReinicio);
 	}
 
+	private HorizontalLayout generaBotonDeReinicio() {
+		HorizontalLayout panelDeReinicio = new HorizontalLayout();
+		
+		Button botonReinicio = new Button("Reiniciar el sistema", new Icon(VaadinIcon.STOP));
+		Dialog dialogoReinicio = generaDialogoDeReinicio();
+		botonReinicio.addThemeVariants(ButtonVariant.LUMO_ERROR);
+		botonReinicio.addClickListener(e -> { dialogoReinicio.open(); });
+		panelDeReinicio.add(botonReinicio);
+		panelDeReinicio.setJustifyContentMode(JustifyContentMode.CENTER);
+		panelDeReinicio.setMargin(true);
+		return panelDeReinicio;
+	}
+	
+	private Dialog generaDialogoDeReinicio() {
+		Dialog dialog = new Dialog();
+
+		dialog.setCloseOnEsc(false);
+		dialog.setCloseOnOutsideClick(false);
+		dialog.add(new Html("<p>¿Seguro que quiere <b>reiniciar</b> el sistema?</p>\n"));
+		Button confirmButton = new Button("Confirmar", VaadinIcon.CHECK.create(), event -> {
+
+			edificio.reiniciarSistema();
+		    dialog.close();
+			UI.getCurrent().getPage().reload();
+			creaNotificacionLumoContrast("Reiniciando...");		    
+		});
+		Button cancelButton = new Button("Cancel",VaadinIcon.CLOSE.create(), event -> {
+			dialog.close();
+			creaNotificacionLumoContrast("Cancelado...");		    
+		});
+		
+		confirmButton.addThemeVariants(ButtonVariant.LUMO_SUCCESS);
+		confirmButton.setClassName("boton");
+		cancelButton.addThemeVariants(ButtonVariant.LUMO_ERROR);
+
+		dialog.add(confirmButton, cancelButton);
+		
+		return dialog;
+	}
+	
+	private void creaNotificacionLumoContrast(String mensaje) {
+		Notification notificacionCancelado = new Notification(mensaje, 4000);
+		notificacionCancelado.addThemeVariants(NotificationVariant.LUMO_CONTRAST);
+		notificacionCancelado.setPosition(Position.MIDDLE);
+		notificacionCancelado.open();
+	}
 	private VerticalLayout generalVistaAscensor(int numeroVista) {
 		VerticalLayout ascensorVerticalLayout3 = new VerticalLayout();
 		botonesExtraAscensorAbierto[numeroVista] = new HorizontalLayout();
@@ -65,6 +119,10 @@ public abstract class PlantaMainViewGeneral extends Div implements Observer {
 		Button callButton3 = new Button("Llamar", new Icon(VaadinIcon.PHONE));
 		callButton3.addClickListener(e -> {
 			edificio.getPlantaPorIndex(this.planta).llamarAscensor(edificio.getAscensorPorIndex(numeroVista));
+			Notification alarm = new Notification("¡Llegada del Ascensor " + (this.edificio.getAscensorPorIndex(numeroVista).getIdAscensor() + 1) + "!" , 4000);
+			alarm.addThemeVariants(NotificationVariant.LUMO_SUCCESS);
+			alarm.setPosition(Position.MIDDLE);
+			alarm.open();
 		});
 		
 		panelDeBotones = new ArrayList<Button>();
@@ -163,7 +221,7 @@ public abstract class PlantaMainViewGeneral extends Div implements Observer {
 
 	abstract H1 getH1Planta();
 
-	@Override
+	@Override 
 	public void update(int piso, int idAscensor) {
 		this.numeroPisoAscensores[idAscensor].setValue(String.valueOf(piso + 1));
 		if (checkPuertasAbiertas(idAscensor)) {

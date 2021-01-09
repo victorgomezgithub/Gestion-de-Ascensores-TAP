@@ -27,3 +27,7 @@ vaadin-app-layout[dir='rtl'] vaadin-horizontal-layout #header img#avatar {
 	height: 100px;
 	width: 100px;
 }
+
+.boton { 
+	margin-right: 10%;
+}
