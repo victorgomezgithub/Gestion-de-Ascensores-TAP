@@ -61,7 +61,6 @@ public class PanelDeControl extends Div {
 		return botonesControlAscensores;
 	}
 
-
 	private HorizontalLayout createsViewTitle() {
 		HorizontalLayout tituloPC = new HorizontalLayout();
 		H1 panelcontrol = new H1("Panel de Control");
