@@ -59,7 +59,7 @@ public class PanelDeControl extends Div {
 		botonesControlAscensores.setJustifyContentMode(JustifyContentMode.CENTER);
 		
 		return botonesControlAscensores;
-	}
+	} 
 
 	private HorizontalLayout createsViewTitle() {
 		HorizontalLayout tituloPC = new HorizontalLayout();
