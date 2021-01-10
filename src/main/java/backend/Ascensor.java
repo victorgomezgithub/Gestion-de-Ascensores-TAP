@@ -32,7 +32,7 @@ public class Ascensor {
 		this.setEstado(estados.Parado);
 		this.setAlarma(false);
 		this.puerta = true;
-		observers =  new ArrayList<Observer>();
+		observers =  new ArrayList<>();
 	}
 	
 	public void irAPiso(int plantaObjetivo) {
@@ -97,10 +97,10 @@ public class Ascensor {
 		return alarma;
 	}
 	public String getAlarmaPcontrol() {
-		if (alarma==false)
-			return "No pulsada";
-		else
+		if (alarma)
 			return "Pulsada";
+		else
+			return "No pulsada";
 	}
 
 	public void setAlarma(boolean alarma) {
@@ -132,7 +132,7 @@ public class Ascensor {
 		this.notifyObservers();
 	}
 	public String getPuertaPcontrol() {
-		if (puerta==true)
+		if (puerta)
 			return "Abierta";
 		else
 			return "Cerrada";

@@ -14,6 +14,7 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.example.application.views.main.MainView;
 import com.vaadin.flow.router.RouteAlias;
@@ -26,7 +27,7 @@ import backend.Edificio;
 @RouteAlias(value = "", layout = MainView.class)
 public class PanelDeControl extends Div {
 
-	ArrayList<Ascensor> ascensores;
+	List<Ascensor> ascensores;
 	Edificio edificio;
 
 	public PanelDeControl() {

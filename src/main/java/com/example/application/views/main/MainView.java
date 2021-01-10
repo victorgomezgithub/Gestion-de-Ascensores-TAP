@@ -10,7 +10,6 @@ import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.server.PWA;
 import com.example.application.components.MenuBarCustom;
-import com.example.application.views.main.MainView;
 
 /**
  * The main view is a top-level placeholder for other views.
