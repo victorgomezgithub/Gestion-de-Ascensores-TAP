@@ -24,8 +24,7 @@ public class MainView extends AppLayout {
 	public MainView() {
         HorizontalLayout header = createHeader();
     	MenuBar barmenu = MenuBarCustom.getMenuBarCustom();
-    	addToNavbar(header,barmenu);
-    	
+    	addToNavbar(header,barmenu);   	
     }
 
 

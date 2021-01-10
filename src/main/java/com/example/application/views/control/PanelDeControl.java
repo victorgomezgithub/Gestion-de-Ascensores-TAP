@@ -21,7 +21,7 @@ import com.vaadin.flow.router.RouteAlias;
 import backend.Ascensor;
 import backend.Edificio;
 
-@Route(value = "hello", layout = MainView.class)
+@Route(value = "panel", layout = MainView.class)
 @PageTitle("Hello World")
 @RouteAlias(value = "", layout = MainView.class)
 public class PanelDeControl extends Div {
