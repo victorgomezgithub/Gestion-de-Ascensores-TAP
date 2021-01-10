@@ -13,7 +13,6 @@ import com.vaadin.flow.component.orderedlayout.FlexComponent.JustifyContentMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.example.application.views.main.MainView;
@@ -27,7 +26,8 @@ import backend.Edificio;
 @RouteAlias(value = "", layout = MainView.class)
 public class PanelDeControl extends Div {
 
-	List<Ascensor> ascensores;
+	private static final long serialVersionUID = 1L;
+	private List<Ascensor> ascensores;
 	Edificio edificio;
 
 	public PanelDeControl() {

@@ -12,11 +12,11 @@ public class Ascensor {
 	private ArrayList<Observer> observers;
 	
 	private enum estados{
-		Subiendo,
-		Bajando,
-		Cerrando,
-		Abriendo,
-		Parado
+		SUBIENDO,
+		BAJANDO,
+		CERRANDO,
+		ABRIENDO,
+		PARADO
 	}
 	
 	private estados estado;
@@ -29,7 +29,7 @@ public class Ascensor {
 		this.idAscensor = idAscensoresTotales;
 		idAscensoresTotales++;
 		this.piso = 0;
-		this.setEstado(estados.Parado);
+		this.setEstado(estados.PARADO);
 		this.setAlarma(false);
 		this.puerta = true;
 		observers =  new ArrayList<>();
@@ -55,16 +55,16 @@ public class Ascensor {
 	}
 	
 	public void abrirPuertas() {
-		this.setEstado(estados.Abriendo);
+		this.setEstado(estados.ABRIENDO);
 		this.setPuerta(true);
 	}
 	
 	public void subiendo() {
-		this.setEstado(estados.Subiendo) ;
+		this.setEstado(estados.SUBIENDO) ;
 	}
 	
 	public void bajando() {
-		this.setEstado(estados.Bajando) ;
+		this.setEstado(estados.BAJANDO) ;
 	}
 	
 	public void pulsarAlarma() {
