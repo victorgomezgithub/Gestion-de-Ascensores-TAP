@@ -1,11 +1,12 @@
 package com.example.application.views.control;
 
+import com.vaadin.flow.component.HtmlContainer;
+import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.grid.GridVariant;
-import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -24,11 +25,12 @@ import backend.Edificio;
 @Route(value = "panel", layout = MainView.class)
 @PageTitle("Hello World")
 @RouteAlias(value = "", layout = MainView.class)
-public class PanelDeControl extends Div {
+@Tag("div")
+public class PanelDeControl extends HtmlContainer {
 
 	private static final long serialVersionUID = 1L;
-	private List<Ascensor> ascensores;
-	Edificio edificio;
+	private transient  List<Ascensor> ascensores;
+	private transient Edificio edificio;
 
 	public PanelDeControl() {
 		this.edificio= Edificio.getSingletonEdificio();

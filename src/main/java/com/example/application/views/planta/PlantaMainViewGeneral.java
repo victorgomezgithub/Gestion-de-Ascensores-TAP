@@ -4,11 +4,12 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import com.vaadin.flow.component.Html;
+import com.vaadin.flow.component.HtmlContainer;
+import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.dialog.Dialog;
-import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.icon.Icon;
@@ -25,7 +26,8 @@ import com.vaadin.flow.data.value.ValueChangeMode;
 import backend.Edificio;
 import backend.Observer;
 
-public abstract class PlantaMainViewGeneral extends Div implements Observer, Serializable {
+@Tag("div")
+public abstract class PlantaMainViewGeneral extends HtmlContainer implements Observer, Serializable {
 
 
 	private static final long serialVersionUID = -1140038204937535702L;
@@ -34,7 +36,7 @@ public abstract class PlantaMainViewGeneral extends Div implements Observer, Ser
 	private ArrayList<Button> panelDeBotones;
 
 	private final int planta = getPlantaActual();
-	private Edificio edificio;
+	private transient Edificio edificio;
 
 	private HorizontalLayout[] botonesExtraAscensorAbierto;
 
