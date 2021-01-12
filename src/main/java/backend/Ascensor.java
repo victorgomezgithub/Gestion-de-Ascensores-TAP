@@ -161,10 +161,9 @@ public class Ascensor {
 	}
 	
 	public void llamadaDePlanta(int plantaObjetivo) {
-		
 		panel.llamadaDePlanta(this, plantaObjetivo);
+		setPuerta(true);
 		panel.updateState(this);
-
 	}
 	
 	public String getEstadoPcontrol() {
