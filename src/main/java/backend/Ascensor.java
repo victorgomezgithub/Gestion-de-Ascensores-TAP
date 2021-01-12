@@ -9,7 +9,9 @@ public class Ascensor {
 	static int idAscensoresTotales = 0;
 	
 	public static void restarUnoTotalAscensores() {
-		Ascensor.idAscensoresTotales--;
+		if(idAscensoresTotales != 0) {
+			Ascensor.idAscensoresTotales--;
+		}
 	}
 	private ArrayList<Observer> observers;
 	

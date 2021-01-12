@@ -47,8 +47,10 @@ public class Edificio {
 	}
 	
 	public void removeAscensor() {
-		ascensores.remove(ascensores.size() - 1);
-		Ascensor.restarUnoTotalAscensores();
+		if(!ascensores.isEmpty()) {
+			ascensores.remove(ascensores.size() - 1);
+			Ascensor.restarUnoTotalAscensores();
+		}
 	}
 	
 	
