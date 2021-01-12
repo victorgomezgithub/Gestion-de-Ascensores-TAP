@@ -1,42 +1,32 @@
 package backend;
 
+import java.util.logging.Level;
+
 public class CerrandoPuertas implements PanelDeControlEstado {
 
 
 
 	@Override
-	public void llamadaDePlanta(Ascensor ascensor, int plantaObjetivo) {
-		
-		if(plantaObjetivo == ascensor.getPrimerPisoLlamada() || plantaObjetivo == ascensor.getPiso()) {
-			return;
-		}
-		
-		
-		if((plantaObjetivo > ascensor.getPiso() && plantaObjetivo < ascensor.getPrimerPisoLlamada()) ||  (plantaObjetivo < ascensor.getPiso() && plantaObjetivo > ascensor.getPrimerPisoLlamada())) {
-			ascensor.addPisoLlamadaPrincipio(plantaObjetivo);
-		} else {
-			ascensor.addPisoLlamadaFinal(plantaObjetivo);
-		}
-		
+	public void llamadaDePlanta(Ascensor ascensor, int plantaObjetivo) {	
+		Utils.gestionaLLamadaAscensor( ascensor,  plantaObjetivo);		
 	}
 
 
 
 	@Override
-	public void abrirPuertas(Ascensor ascensor) {
-	
+	public void abrirPuertas(Ascensor ascensor) {	
 		ascensor.setEstado(new AbriendoPuertas());
 	}
 
 	@Override
 	public void cerrarPuertas(Ascensor ascensor) {
-		// TODO Auto-generated method stub
-		
+		logger.log(Level.INFO, "Cerrando Puertas");	
 	}
 
 	@Override
 	public void updateState(Ascensor ascensor) {
-		System.out.println("Cerrando Puertas");
+		logger.log(Level.INFO, "Cerrando Pueras");
+
 		if(ascensor.llamadasEsVacio()) {
 			ascensor.setEstado(new Parado());
 		} else 

@@ -1,50 +1,33 @@
 package backend;
 
+import java.util.logging.Level;
+
 public class Subiendo implements PanelDeControlEstado {
 
 
 
 	@Override
 	public void llamadaDePlanta(Ascensor ascensor, int plantaObjetivo) {
-		
-		
-		if(plantaObjetivo == ascensor.getPrimerPisoLlamada()) {
-			return;
-		}
-		
-		
-		if(plantaObjetivo < ascensor.getPrimerPisoLlamada() && plantaObjetivo > ascensor.getPiso()) {
-			ascensor.addPisoLlamadaPrincipio(plantaObjetivo);
-		} else {
-			ascensor.addPisoLlamadaFinal(plantaObjetivo);
-		}
-		
-		
+		Utils.gestionaLLamadaAscensor(ascensor,  plantaObjetivo);		
 	}
-
 
 	@Override
 	public void abrirPuertas(Ascensor ascensor) {
-		// TODO Auto-generated method stub
-		
+		logger.log(Level.INFO, "No se pueden abrir puertas durante un trayecto de subida");
 	}
 
 	@Override
 	public void cerrarPuertas(Ascensor ascensor) {
-		// TODO Auto-generated method stub
-		
+		logger.log(Level.INFO, "No se pueden cerrar puertas durante un trayecto de subida");
 	}
 
 	@Override
 	public void updateState(Ascensor ascensor) {
-		System.out.println("Subiedo");
-		ascensor.setPiso(ascensor.getPiso() + 1);
-		if(ascensor.getPrimerPisoLlamada() == ascensor.getPiso()) {
-			ascensor.setEstado(new AbriendoPuertas());
-			ascensor.borrarLlamada();
-		}
+		logger.log(Level.INFO, "Subiendo");
+		
+		Utils.movimientoAscensor(ascensor, +1);
 		ascensor.notifyObservers();
-		ascensor.panel.updateState(ascensor);
+
 	}
 	
 }

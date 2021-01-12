@@ -1,53 +1,36 @@
 package backend;
 
+import java.util.logging.Level;
+
 public class Parado implements PanelDeControlEstado {
 
 
 
 	@Override
-	public void llamadaDePlanta(Ascensor ascensor, int plantaObjetivo) {
-		
-		
+	public void llamadaDePlanta(Ascensor ascensor, int plantaObjetivo) {		
 		if(plantaObjetivo == ascensor.getPiso()) {
 			return;
 		}
 		
-		/*
-		 
-		 plantaObjetivo == ascensor.getPrimerPisoLlamada() || 
-		 
-		 
-		if((plantaObjetivo > ascensor.getPiso() && plantaObjetivo < ascensor.getPrimerPisoLlamada()) ||  (plantaObjetivo < ascensor.getPiso() && plantaObjetivo > ascensor.getPrimerPisoLlamada())) {
-			ascensor.addPisoLlamadaPrincipio(plantaObjetivo);
-		} else {
-			ascensor.addPisoLlamadaFinal(plantaObjetivo);
-		}
-		
-		*/		
 		ascensor.addPisoLlamadaFinal(plantaObjetivo);
-
 	}
 
 
 
 	@Override
-	public void abrirPuertas(Ascensor ascensor) {
-		
-		ascensor.setEstado(new AbriendoPuertas());
-		
+	public void abrirPuertas(Ascensor ascensor) {		
+		ascensor.setEstado(new AbriendoPuertas());		
 	}
 
 	@Override
-	public void cerrarPuertas(Ascensor ascensor) {
-		
+	public void cerrarPuertas(Ascensor ascensor) {		
 		ascensor.setEstado(new CerrandoPuertas());
-
 	}
 
 	@Override
 	public void updateState(Ascensor ascensor) {
 		
-		System.out.println("parado");
+		logger.log(Level.INFO, "Ascensor Parado");
 		if(ascensor.llamadasEsVacio()) {
 			ascensor.notifyObservers();
 			return;

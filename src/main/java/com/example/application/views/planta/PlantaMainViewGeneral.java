@@ -213,6 +213,7 @@ public abstract class PlantaMainViewGeneral extends HtmlContainer implements Obs
 		
 		Button alarma = new Button(new Icon(VaadinIcon.BELL), e -> {
 			Notification alarm = new Notification("¡Alarma en el Ascensor " + (this.edificio.getAscensorPorIndex(ascensor).getIdAscensor() + 1) + "!" , 4000);
+			this.edificio.getAscensorPorIndex(ascensor).pulsarAlarma();
 			alarm.addThemeVariants(NotificationVariant.LUMO_ERROR);
 			alarm.setPosition(Position.MIDDLE);
 			alarm.open();

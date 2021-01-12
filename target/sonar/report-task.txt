@@ -2,5 +2,5 @@ projectKey=Gestion-De-Ascensores
 serverUrl=http://localhost:9000
 serverVersion=8.6.0.39681
 dashboardUrl=http://localhost:9000/dashboard?id=Gestion-De-Ascensores
-ceTaskId=AXbuYDf6RLSH3q0G9wY-
-ceTaskUrl=http://localhost:9000/api/ce/task?id=AXbuYDf6RLSH3q0G9wY-
+ceTaskId=AXb4CANJ64HDXMwPeweg
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AXb4CANJ64HDXMwPeweg

@@ -1,6 +1,8 @@
 package backend;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class Ascensor {
 	
@@ -13,7 +15,7 @@ public class Ascensor {
 	
 
 	private int piso;
-	private boolean alarma;
+	private String alarma;
 	private boolean puerta;
 	private int idAscensor;
 	
@@ -28,10 +30,9 @@ public class Ascensor {
 		this.idAscensor = idAscensoresTotales;
 		idAscensoresTotales++;
 		this.piso = 0;
-		this.setAlarma(false);
 		this.puerta = true;
 		observers =  new ArrayList<>();
-		
+		this.alarma = "No Pulsada";
 		// Inicialización
 		llamadas = new ArrayList<>();
 		this.panel = new Parado();
@@ -46,7 +47,7 @@ public class Ascensor {
 	}
 		
 	public void pulsarAlarma() {
-		this.alarma = true;
+		this.alarma = "Alarma pulsada a las " + new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());;
 	}
 
 	public int getPiso() {
@@ -60,17 +61,11 @@ public class Ascensor {
 		this.piso = piso;
 	}
 
-	public boolean getAlarma() {
+	public String getAlarma() {
 		return alarma;
 	}
-	public String getAlarmaPcontrol() {
-		if (alarma)
-			return "Pulsada";
-		else
-			return "No pulsada";
-	}
 
-	public void setAlarma(boolean alarma) {
+	public void setAlarma(String alarma) {
 		this.alarma = alarma;
 	}
 	

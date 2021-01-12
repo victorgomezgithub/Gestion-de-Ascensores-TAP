@@ -80,7 +80,7 @@ public class PanelDeControl extends HtmlContainer {
 		grid.addColumn(Ascensor::getPisoPcontrol).setHeader("Piso actual");
 		grid.addColumn(Ascensor::getEstadoPcontrol).setHeader("Estado actual");
 		grid.addColumn(Ascensor::getPuertaPcontrol).setHeader("Estado puerta");
-		grid.addColumn(Ascensor::getAlarmaPcontrol).setHeader("Alarma");
+		grid.addColumn(Ascensor::getAlarma).setHeader("Alarma");
 		return grid;
 	}
 
