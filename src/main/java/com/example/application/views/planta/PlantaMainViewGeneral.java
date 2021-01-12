@@ -42,6 +42,11 @@ public abstract class PlantaMainViewGeneral extends Div implements Observer {
 
 	private HorizontalLayout[] botonesExtraAscensorAbierto;
 
+	
+	
+	// Constructor, inicializa el edificio, numero de ascensores, las huecos para las imágenes. 
+	
+	
 	public PlantaMainViewGeneral() {
 
 		this.edificio = Edificio.getSingletonEdificio();
@@ -65,6 +70,9 @@ public abstract class PlantaMainViewGeneral extends Div implements Observer {
 		add(tituloHorizontalLayout, ascensores, panelDeReinicio);
 	}
 
+	
+	// Crea el botón de reinicio
+	
 	private HorizontalLayout generaBotonDeReinicio() {
 		HorizontalLayout panelDeReinicio = new HorizontalLayout();
 		
@@ -77,6 +85,11 @@ public abstract class PlantaMainViewGeneral extends Div implements Observer {
 		panelDeReinicio.setMargin(true);
 		return panelDeReinicio;
 	}
+	
+	
+	
+	// Díalogo que aparece en caso de pulsar el botón de reinicio
+	// Puedes cancelar el reinicio
 	
 	private Dialog generaDialogoDeReinicio() {
 		Dialog dialog = new Dialog();
@@ -105,12 +118,16 @@ public abstract class PlantaMainViewGeneral extends Div implements Observer {
 		return dialog;
 	}
 	
+	
+	// Muestra un cuadro de diálogo con el texto que se le pase
 	private void creaNotificacionLumoContrast(String mensaje) {
 		Notification notificacionCancelado = new Notification(mensaje, 4000);
 		notificacionCancelado.addThemeVariants(NotificationVariant.LUMO_CONTRAST);
 		notificacionCancelado.setPosition(Position.MIDDLE);
 		notificacionCancelado.open();
 	}
+	
+	// Crea un espacio para cada uno de los ascensores, son tres de forma predeterminada, pero se pueden agregar o eliminar ascensores 
 	private VerticalLayout generalVistaAscensor(int numeroVista) {
 		VerticalLayout ascensorVerticalLayout3 = new VerticalLayout();
 		botonesExtraAscensorAbierto[numeroVista] = new HorizontalLayout();
@@ -145,10 +162,10 @@ public abstract class PlantaMainViewGeneral extends Div implements Observer {
 		HorizontalLayout panelCuarto = new HorizontalLayout();
 		
 		Button abrirPuertas = new Button(new Icon(VaadinIcon.EXPAND_SQUARE), e -> {
-			this.edificio.getAscensorPorIndex(numeroVista).setPuerta(true);
+			this.edificio.getAscensorPorIndex(numeroVista).abrirPuertas();
 		});
 		Button cerrarPuertas = new Button(new Icon(VaadinIcon.COMPRESS_SQUARE), e -> {
-			this.edificio.getAscensorPorIndex(numeroVista).setPuerta(false);
+			this.edificio.getAscensorPorIndex(numeroVista).cerrarPuertas();
 		});
 		
 		panelCuarto.add(abrirPuertas,cerrarPuertas);

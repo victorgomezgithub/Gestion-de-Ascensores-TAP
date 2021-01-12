@@ -21,3 +21,9 @@ vaadin-app-layout[dir='rtl'] vaadin-horizontal-layout #header img#avatar {
   margin-left: var(--lumo-space-m);
   margin-right: auto;
 }
+
+
+.v-Notification.mystyle {
+	height: 100px;
+	width: 100px;
+}

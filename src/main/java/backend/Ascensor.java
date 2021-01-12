@@ -11,76 +11,48 @@ public class Ascensor {
 	}
 	private ArrayList<Observer> observers;
 	
-	private enum estados{
-		Subiendo,
-		Bajando,
-		Cerrando,
-		Abriendo,
-		Parado
-	}
-	
-	private estados estado;
+
 	private int piso;
 	private boolean alarma;
 	private boolean puerta;
 	private int idAscensor;
 	
+	
+	// Añado lista de pisos por visitar
+	private ArrayList<Integer> llamadas;
+	PanelDeControlEstado panel;
+	//
+	
+	
 	public Ascensor() {
 		this.idAscensor = idAscensoresTotales;
 		idAscensoresTotales++;
 		this.piso = 0;
-		this.setEstado(estados.Parado);
+
 		this.setAlarma(false);
 		this.puerta = true;
-		observers =  new ArrayList<Observer>();
+		observers =  new ArrayList<>();
+		
+		// Inicialización
+		llamadas = new ArrayList<>();
+		this.panel = new Parado();
 	}
 	
-	public void irAPiso(int plantaObjetivo) {
-		this.puerta = true;
-		while (this.piso != plantaObjetivo) {
-			if (plantaObjetivo < this.piso) {
-				this.piso = this.piso - 1;
-			}
-			else {	
-				this.piso = this.piso + 1;
-			}
-			this.notifyObservers();
-		}
-		this.notifyObservers();
-	}
+	
 
 	public int getIdAscensor()
 	{
 		return idAscensor;
 	}
 	
-	public void abrirPuertas() {
-		this.setEstado(estados.Abriendo);
-		this.setPuerta(true);
-	}
-	
-	public void subiendo() {
-		this.setEstado(estados.Subiendo) ;
-	}
-	
-	public void bajando() {
-		this.setEstado(estados.Bajando) ;
-	}
+
+
 	
 	public void pulsarAlarma() {
 		this.alarma = true;
 	}
 
-	public estados getEstado() {
-		return estado;
-	}
-	public String getEstadoPcontrol() {
-		return estado.toString();
-	}
 
-	public void setEstado(estados estado) {
-		this.estado = estado;
-	}
 	
 	public int getPiso() {
 		return piso;
@@ -138,5 +110,70 @@ public class Ascensor {
 			return "Cerrada";
 	}
 	
+	
+	public void abrirPuertas() {
+		this.setPuerta(true);
+		panel.abrirPuertas(this);
+		panel.updateState(this);
+	}
+	
+	public void cerrarPuertas() {
+		this.setPuerta(false);
+		panel.cerrarPuertas(this);
+		panel.updateState(this);
+	}
+	
+	
+	public int getPrimerPisoLlamada() {
+		return this.llamadas.get(0);
+	}
+	
+	public void borrarLlamada() {
+		this.llamadas.remove(0);
+	}
+	
+	
+	public boolean checkColaLlamadas() {
+		return this.llamadas.isEmpty();
+	}
+	
+	public void addPisoLlamadaFinal(int piso) {
+		
+		if(llamadas.contains(piso)) {
+			return;
+		}
+		
+		llamadas.add(piso);
+	}
+	
+	public void addPisoLlamadaPrincipio(int piso) {
+		
+		if(llamadas.contains(piso)) {
+			return;
+		}
+		
+		llamadas.add(0, piso);
+	}
+	
+	public void setEstado(PanelDeControlEstado nuevoEstado) {
+		this.panel = nuevoEstado;
+	}
+	
+	public boolean llamadasEsVacio() {
+		
+		return this.llamadas.isEmpty();
+		
+	}
+	
+	public void llamadaDePlanta(int plantaObjetivo) {
+		
+		panel.llamadaDePlanta(this, plantaObjetivo);
+		panel.updateState(this);
+
+	}
+	
+	public String getEstadoPcontrol() {
+		return this.panel.getClass().getSimpleName();
+	}
 
 }

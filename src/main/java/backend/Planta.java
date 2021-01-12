@@ -7,7 +7,7 @@ public class Planta {
 		this.numPiso = numPiso;
 	}
 	public void llamarAscensor(Ascensor a) {
-		a.irAPiso(numPiso);
+		a.llamadaDePlanta(numPiso);
 	}
 	
 }
