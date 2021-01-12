@@ -1,6 +1,5 @@
 backend\Edificio.class
 backend\AbriendoPuertas.class
-backend\Main.class
 com\example\application\views\planta\Planta3.class
 com\example\application\views\planta\PlantaMainViewGeneral.class
 com\example\application\views\planta\Planta7.class

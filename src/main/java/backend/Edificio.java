@@ -1,14 +1,15 @@
 package backend;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Edificio {
 
 	
 	private static Edificio edificio;
 	
-	ArrayList<Planta> plantas;
-	ArrayList<Ascensor> ascensores;
+	List<Planta> plantas;
+	List<Ascensor> ascensores;
 	
 	private Edificio() {
 		plantas = inicializarPlantas();
@@ -23,8 +24,8 @@ public class Edificio {
 		return edificio;
 	}
 	
-	private ArrayList<Ascensor> inicializarAscensores() {
-		ascensores = new ArrayList<Ascensor>();
+	private List<Ascensor> inicializarAscensores() {
+		ascensores = new ArrayList<>();
 		for(int i = 0; i<3; i++) 
 		{
 			ascensores.add(new Ascensor());
@@ -32,8 +33,8 @@ public class Edificio {
 		return ascensores;	
 	}
 
-	private ArrayList<Planta> inicializarPlantas() {
-		plantas = new ArrayList<Planta>();
+	private List<Planta> inicializarPlantas() {
+		plantas = new ArrayList<>();
 		for(int i = 0; i<8; i++)
 		{
 			plantas.add(new Planta(i));
@@ -59,15 +60,14 @@ public class Edificio {
 		return plantas.get(index);
 	}
 
-	public ArrayList<Ascensor> getAscensores() {
+	public List<Ascensor> getAscensores() {
 		return ascensores;
 	}
-	//TODO metodo que asocie un observer a ascensor, y ya estar
 	public void attachObserver(Observer o,int ascensor) {
 		getAscensorPorIndex(ascensor).attachObserver(o);
 	}
 	
-	public void reiniciarSistema() {
+	public static void reiniciarSistema() {
 		Ascensor.idAscensoresTotales = 0;
 		edificio = new Edificio();
 	}

@@ -28,7 +28,6 @@ public class Ascensor {
 		this.idAscensor = idAscensoresTotales;
 		idAscensoresTotales++;
 		this.piso = 0;
-
 		this.setAlarma(false);
 		this.puerta = true;
 		observers =  new ArrayList<>();
@@ -36,6 +35,7 @@ public class Ascensor {
 		// Inicialización
 		llamadas = new ArrayList<>();
 		this.panel = new Parado();
+
 	}
 	
 	
@@ -44,16 +44,11 @@ public class Ascensor {
 	{
 		return idAscensor;
 	}
-	
-
-
-	
+		
 	public void pulsarAlarma() {
 		this.alarma = true;
 	}
 
-
-	
 	public int getPiso() {
 		return piso;
 	}
@@ -69,10 +64,10 @@ public class Ascensor {
 		return alarma;
 	}
 	public String getAlarmaPcontrol() {
-		if (alarma==false)
-			return "No pulsada";
-		else
+		if (alarma)
 			return "Pulsada";
+		else
+			return "No pulsada";
 	}
 
 	public void setAlarma(boolean alarma) {
@@ -104,7 +99,7 @@ public class Ascensor {
 		this.notifyObservers();
 	}
 	public String getPuertaPcontrol() {
-		if (puerta==true)
+		if (puerta)
 			return "Abierta";
 		else
 			return "Cerrada";

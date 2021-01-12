@@ -1,3 +1,5 @@
+/target/
+/classes/
 *.iml
 .DS_Store
 

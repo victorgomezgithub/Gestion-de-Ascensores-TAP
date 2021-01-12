@@ -1,19 +1,17 @@
 package com.example.application.views.planta;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-import javax.swing.text.html.HTML;
-
 import com.vaadin.flow.component.Html;
-import com.vaadin.flow.component.Text;
+import com.vaadin.flow.component.HtmlContainer;
+import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.dialog.Dialog;
-import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Image;
-import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.notification.Notification;
@@ -28,26 +26,22 @@ import com.vaadin.flow.data.value.ValueChangeMode;
 import backend.Edificio;
 import backend.Observer;
 
-public abstract class PlantaMainViewGeneral extends Div implements Observer {
+@Tag("div")
+public abstract class PlantaMainViewGeneral extends HtmlContainer implements Observer, Serializable {
 
-	// LINEA UTIL PARA COMPRENDER LOS LAYOUT
-	// botonera.getStyle().set("border", "1px solid #9E9E9E");
 
+	private static final long serialVersionUID = -1140038204937535702L;
 	private TextField[] numeroPisoAscensores;
 	private Image[] ascensoresImagenes;
 	private ArrayList<Button> panelDeBotones;
 
 	private final int planta = getPlantaActual();
-	private Edificio edificio;
+	private transient Edificio edificio;
 
 	private HorizontalLayout[] botonesExtraAscensorAbierto;
 
-	
-	
-	// Constructor, inicializa el edificio, numero de ascensores, las huecos para las imágenes. 
-	
-	
-	public PlantaMainViewGeneral() {
+
+	protected PlantaMainViewGeneral() {
 
 		this.edificio = Edificio.getSingletonEdificio();
 		this.numeroPisoAscensores = new TextField[edificio.getAscensoresLength()];
@@ -79,7 +73,7 @@ public abstract class PlantaMainViewGeneral extends Div implements Observer {
 		Button botonReinicio = new Button("Reiniciar el sistema", new Icon(VaadinIcon.STOP));
 		Dialog dialogoReinicio = generaDialogoDeReinicio();
 		botonReinicio.addThemeVariants(ButtonVariant.LUMO_ERROR);
-		botonReinicio.addClickListener(e -> { dialogoReinicio.open(); });
+		botonReinicio.addClickListener(e -> dialogoReinicio.open());
 		panelDeReinicio.add(botonReinicio);
 		panelDeReinicio.setJustifyContentMode(JustifyContentMode.CENTER);
 		panelDeReinicio.setMargin(true);
@@ -99,7 +93,7 @@ public abstract class PlantaMainViewGeneral extends Div implements Observer {
 		dialog.add(new Html("<p>¿Seguro que quiere <b>reiniciar</b> el sistema?</p>\n"));
 		Button confirmButton = new Button("Confirmar", VaadinIcon.CHECK.create(), event -> {
 
-			edificio.reiniciarSistema();
+			Edificio.reiniciarSistema();
 		    dialog.close();
 			UI.getCurrent().getPage().reload();
 			creaNotificacionLumoContrast("Reiniciando...");		    
@@ -145,7 +139,7 @@ public abstract class PlantaMainViewGeneral extends Div implements Observer {
 			alarm.open();
 		});
 		
-		panelDeBotones = new ArrayList<Button>();
+		panelDeBotones = new ArrayList<>();
 		getPanelDeBotones(this.botonesExtraAscensorAbierto[numeroVista], numeroVista);
 		
 		if (checkPuertasAbiertas(numeroVista)) {
@@ -161,12 +155,10 @@ public abstract class PlantaMainViewGeneral extends Div implements Observer {
 
 		HorizontalLayout panelCuarto = new HorizontalLayout();
 		
-		Button abrirPuertas = new Button(new Icon(VaadinIcon.EXPAND_SQUARE), e -> {
-			this.edificio.getAscensorPorIndex(numeroVista).abrirPuertas();
-		});
-		Button cerrarPuertas = new Button(new Icon(VaadinIcon.COMPRESS_SQUARE), e -> {
-			this.edificio.getAscensorPorIndex(numeroVista).cerrarPuertas();
-		});
+
+		Button abrirPuertas = new Button(new Icon(VaadinIcon.EXPAND_SQUARE), e -> this.edificio.getAscensorPorIndex(numeroVista).abrirPuertas());
+		Button cerrarPuertas = new Button(new Icon(VaadinIcon.COMPRESS_SQUARE), e -> this.edificio.getAscensorPorIndex(numeroVista).cerrarPuertas());
+
 		
 		panelCuarto.add(abrirPuertas,cerrarPuertas);
 		
@@ -188,8 +180,8 @@ public abstract class PlantaMainViewGeneral extends Div implements Observer {
 	private HorizontalLayout generaTituloPlanta() {
 		setId("about-view");
 		HorizontalLayout tituloHorizontalLayout = new HorizontalLayout();
-		H1 planta = getH1Planta();
-		tituloHorizontalLayout.add(planta);
+		H1 plantaTitle = getH1Planta();
+		tituloHorizontalLayout.add(plantaTitle);
 		tituloHorizontalLayout.setJustifyContentMode(JustifyContentMode.CENTER);
 		return tituloHorizontalLayout;
 	}
@@ -207,9 +199,7 @@ public abstract class PlantaMainViewGeneral extends Div implements Observer {
 		HorizontalLayout panelTercero = new HorizontalLayout();
 		for (int i = 0; i <= 6; i++) {
 			Button boton = new Button(String.valueOf(i + 1));
-			boton.addClickListener(e -> {
-				this.edificio.getPlantaPorIndex(Integer.parseInt(boton.getText()) - 1).llamarAscensor(this.edificio.getAscensorPorIndex(ascensor));
-			});
+			boton.addClickListener(e -> this.edificio.getPlantaPorIndex(Integer.parseInt(boton.getText()) - 1).llamarAscensor(this.edificio.getAscensorPorIndex(ascensor)));
 
 			panelDeBotones.add(boton);
 			if (i == 0) {
@@ -256,11 +246,7 @@ public abstract class PlantaMainViewGeneral extends Div implements Observer {
 	
 	
 	public boolean checkPuertasAbiertas(int idAscensor) {		
-		if(this.planta == edificio.getAscensorPorIndex(idAscensor).getPiso() && edificio.getAscensorPorIndex(idAscensor).getPuerta() == true) {
-			return true;
-		} else {
-			return false;
-		}		
+			return (this.planta == edificio.getAscensorPorIndex(idAscensor).getPiso() && edificio.getAscensorPorIndex(idAscensor).getPuerta());
 	}
 
 }
