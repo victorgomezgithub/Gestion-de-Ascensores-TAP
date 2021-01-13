@@ -23,8 +23,8 @@ import backend.Ascensor;
 import backend.Edificio;
 
 @Route(value = "panel", layout = MainView.class)
-@PageTitle("Hello World")
 @RouteAlias(value = "", layout = MainView.class)
+@PageTitle("Panel de Control")
 @Tag("div")
 public class PanelDeControl extends HtmlContainer {
 

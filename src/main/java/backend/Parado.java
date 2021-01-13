@@ -7,12 +7,19 @@ public class Parado implements PanelDeControlEstado {
 
 
 	@Override
-	public void llamadaDePlanta(Ascensor ascensor, int plantaObjetivo) {		
+	public void llamadaDePlanta(Ascensor ascensor, int plantaObjetivo) {
+		
 		if(plantaObjetivo == ascensor.getPiso()) {
+			ascensor.setEstado(new AbriendoPuertas());
 			return;
 		}
 		
-		ascensor.addPisoLlamadaFinal(plantaObjetivo);
+		
+		if(!ascensor.llamadasEsVacio() && ((plantaObjetivo > ascensor.getPiso() && plantaObjetivo < ascensor.getPrimerPisoLlamada()) ||  (plantaObjetivo < ascensor.getPiso() && plantaObjetivo > ascensor.getPrimerPisoLlamada()))) {
+			ascensor.addPisoLlamadaPrincipio(plantaObjetivo);
+		} else {
+			ascensor.addPisoLlamadaFinal(plantaObjetivo);
+		}
 	}
 
 
